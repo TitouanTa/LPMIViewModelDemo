@@ -37,6 +37,7 @@
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:text="@={viewModel.val1}"
                 app:layout_constraintBottom_toTopOf="@+id/editText2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
@@ -45,6 +46,7 @@
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:text="@={viewModel.val2}"
                 app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/editText"
                 tools:layout_editor_absoluteX="0dp" />
@@ -55,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:textSize="50sp"
-                android:text="Résultat"
+                android:text="@{viewModel.resultat}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
