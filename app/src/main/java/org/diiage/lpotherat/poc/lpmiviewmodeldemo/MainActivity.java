@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
                 AppDatabase.class, "operations.sqlite").build();
 
 
-        Executors.newSingleThreadExecutor().execute(() -> {
+        /*Executors.newSingleThreadExecutor().execute(() -> {
             db.operationDao().insert(new Operation(0,1,1));
             db.operationDao().insert(new Operation(0,2,2));
             db.operationDao().insert(new Operation(0,3,3));
             db.operationDao().insert(new Operation(0,420,69));
-        });
+        });*/
 
 
 

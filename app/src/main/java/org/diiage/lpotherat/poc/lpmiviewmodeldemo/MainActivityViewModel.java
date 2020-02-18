@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.diiage.lpotherat.poc.lpmiviewmodeldemo.dal.AppDatabase;
+import org.diiage.lpotherat.poc.lpmiviewmodeldemo.model.Operation;
+
+import java.util.Objects;
 
 public class MainActivityViewModel extends ViewModel {
 
@@ -29,18 +33,35 @@ public class MainActivityViewModel extends ViewModel {
 
     //Type mutablelivedata, permet d'avoir un flux de données
     //bidirectionnel lecture / écriture
-    MutableLiveData<String> val1;
-    MutableLiveData<String> val2;
+    MediatorLiveData<String> val1 = new MediatorLiveData<>();
+    MediatorLiveData<String> val2 = new MediatorLiveData<>();
 
     //Type livedata, fourni un flux unidirectionel en lecture
     LiveData<String> resultat;
 
+    MutableLiveData<Long> id = new MutableLiveData<>();
+    LiveData<Operation> operation;
+
     public MainActivityViewModel(AppDatabase appDatabase) {
 
+        id.setValue(1L);
 
+        operation = Transformations.switchMap(id,input -> appDatabase.operationDao().getById(input));
 
-        val1 = new MutableLiveData<>();
-        val2 = new MutableLiveData<>();
+        val1.addSource(operation,op -> {
+            if (op != null) {
+                val1.setValue(String.valueOf(op.getVal1()));
+            } else {
+                val1.setValue("");
+            }
+        });
+        val2.addSource(operation,op -> {
+            if (op != null) {
+                val2.setValue(String.valueOf(op.getVal2()));
+            } else {
+                val2.setValue("");
+            }
+        });
 
         //Un mediatorlivedata permet de conciler plusieurs sources de données
         //Dans cet exemple, résultat est abonné à val1 et val2.
@@ -97,5 +118,12 @@ public class MainActivityViewModel extends ViewModel {
      */
     public LiveData<String> getResultat() {
         return resultat;
+    }
+
+    public void next(){
+        id.setValue(Objects.requireNonNull(id.getValue()) + 1);
+    }
+    public void previous(){
+        id.setValue(Objects.requireNonNull(id.getValue()) - 1);
     }
 }
