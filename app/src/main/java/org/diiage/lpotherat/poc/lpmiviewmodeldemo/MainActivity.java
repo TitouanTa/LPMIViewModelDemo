@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import android.view.View;
 
+import org.diiage.lpotherat.poc.lpmiviewmodeldemo.dal.AppDatabase;
 import org.diiage.lpotherat.poc.lpmiviewmodeldemo.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +21,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "operations.sqlite").build();
+
+
+
         //Récupération d'une instance de notre viewmodel
         //On utilise un ViewModelProvider, jamais directement "new".
         MainActivityViewModel viewModel =

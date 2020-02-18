@@ -1,11 +1,31 @@
 package org.diiage.lpotherat.poc.lpmiviewmodeldemo;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
+import org.diiage.lpotherat.poc.lpmiviewmodeldemo.dal.AppDatabase;
 
 public class MainActivityViewModel extends ViewModel {
+
+    public static class Factory implements ViewModelProvider.Factory{
+
+        AppDatabase appDatabase;
+
+        public Factory(AppDatabase appDatabase) {
+            this.appDatabase = appDatabase;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new MainActivityViewModel(appDatabase);
+        }
+    }
 
     //Type mutablelivedata, permet d'avoir un flux de données
     //bidirectionnel lecture / écriture
@@ -15,7 +35,10 @@ public class MainActivityViewModel extends ViewModel {
     //Type livedata, fourni un flux unidirectionel en lecture
     LiveData<String> resultat;
 
-    public MainActivityViewModel() {
+    public MainActivityViewModel(AppDatabase appDatabase) {
+
+
+
         val1 = new MutableLiveData<>();
         val2 = new MutableLiveData<>();
 
