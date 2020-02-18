@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         //On utilise un ViewModelProvider, jamais directement "new".
         MainActivityViewModel viewModel =
         //On indique au provider que this est le StoreOwner
-                new ViewModelProvider(this)
+                new ViewModelProvider(this,new MainActivityViewModel.Factory(db))
         //On lui demande ensuite une instance de notre ViewModel
                         .get(MainActivityViewModel.class);
 
