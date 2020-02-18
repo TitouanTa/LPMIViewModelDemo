@@ -15,6 +15,9 @@ import android.view.View;
 
 import org.diiage.lpotherat.poc.lpmiviewmodeldemo.dal.AppDatabase;
 import org.diiage.lpotherat.poc.lpmiviewmodeldemo.databinding.ActivityMainBinding;
+import org.diiage.lpotherat.poc.lpmiviewmodeldemo.model.Operation;
+
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "operations.sqlite").build();
+
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            db.operationDao().insert(new Operation(0,1,1));
+            db.operationDao().insert(new Operation(0,2,2));
+            db.operationDao().insert(new Operation(0,3,3));
+            db.operationDao().insert(new Operation(0,420,69));
+        });
 
 
 

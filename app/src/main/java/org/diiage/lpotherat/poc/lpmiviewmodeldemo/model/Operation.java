@@ -14,10 +14,16 @@ import androidx.room.PrimaryKey;
 public class Operation {
     //On déclare ici la clé primaire avec l'annotation
     //@PrimaryKey
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private int val1;
     private int val2;
+
+    public Operation(long id, int val1, int val2) {
+        this.id = id;
+        this.val1 = val1;
+        this.val2 = val2;
+    }
 
     public long getId() {
         return id;
